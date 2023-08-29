@@ -1,7 +1,5 @@
 package com.bobobode.cs;
 
-import com.bobocode.util.ExerciseNotCompletedException;
-
 /**
  * A class that consists of static methods only and provides util methods for {@link Node}.
  * <p><p>
@@ -22,7 +20,7 @@ public class Nodes {
      * @return a new instance of {@link Node}
      */
     public static <T> Node<T> create(T element) {
-        throw new ExerciseNotCompletedException(); // todo:
+        return new Node<>(element);
     }
 
     /**
@@ -33,7 +31,7 @@ public class Nodes {
      * @param <T>    a genetic type
      */
     public static <T> void link(Node<T> first, Node<T> second) {
-        throw new ExerciseNotCompletedException(); // todo:
+        first.next = second;
     }
 
     /**
@@ -46,7 +44,9 @@ public class Nodes {
      * @return a reference to a first node created based on firstElement
      */
     public static <T> Node<T> pairOf(T firstElement, T secondElement) {
-        throw new ExerciseNotCompletedException(); // todo:
+        Node<T> node = new Node<>(firstElement);
+        node.next = new Node<>(secondElement);
+        return node;
     }
 
     /**
@@ -60,7 +60,11 @@ public class Nodes {
      * @return a reference to the first node
      */
     public static <T> Node<T> closedPairOf(T firstElement, T secondElement) {
-        throw new ExerciseNotCompletedException(); // todo:
+        Node<T> node = new Node<>(firstElement);
+        Node<T> second = new Node<>(secondElement);
+        node.next = second;
+        second.next = node;
+        return node;
     }
 
     /**
@@ -72,7 +76,18 @@ public class Nodes {
      * @return a reference to the first element of the chain
      */
     public static <T> Node<T> chainOf(T... elements) {
-        throw new ExerciseNotCompletedException(); // todo:
+        Node<T> node = null;
+        Node<T> first = null;
+        for (int i = 0; i < elements.length; i++) {
+            if (node == null) {
+                node = new Node<>(elements[i]);
+                first = node;
+            } else {
+                node.next = new Node<>(elements[i]);
+                node = node.next;
+            }
+        }
+        return first;
     }
 
     /**
@@ -85,6 +100,12 @@ public class Nodes {
      * @return a reference to the first element of the chain
      */
     public static <T> Node<T> circleOf(T... elements) {
-        throw new ExerciseNotCompletedException(); // todo:
+        Node<T> node = chainOf(elements);
+        Node<T> first = node;
+        while (node.next != null) {
+            node = node.next;
+        }
+        node.next = first;
+        return first;
     }
 }
